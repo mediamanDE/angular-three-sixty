@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-npm install --save @mediaman/angular.three-sixty
+npm install --save @mediaman/angular-three-sixty
 ```
 
 ## Importing library
