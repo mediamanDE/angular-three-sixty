@@ -1,0 +1,25 @@
+{
+    "extends": [
+        "tslint-angular"
+    ],
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            [
+                "dir-prefix1",
+                "dir-prefix2"
+            ],
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            [
+                "mm"
+            ],
+            "kebab-case"
+        ],
+        "no-inferrable-types": false
+    }
+}

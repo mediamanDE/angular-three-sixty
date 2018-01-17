@@ -1,0 +1,4 @@
+/**
+ * @license angular-three-sixty
+ * MIT license
+ */
