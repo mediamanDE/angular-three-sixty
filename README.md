@@ -2,6 +2,8 @@
 
 > Angular 360° component using the [three-sixty library](https://github.com/mediamanDE/three-sixty).
 
+[![Build Status](https://travis-ci.org/mediamanDE/angular-three-sixty.svg?branch=master)](https://travis-ci.org/mediamanDE/angular-three-sixty)
+
 ## Installation
 
 ```bash
