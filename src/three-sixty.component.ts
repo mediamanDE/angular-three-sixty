@@ -31,6 +31,11 @@ export class ThreeSixtyComponent implements OnInit {
     @Input() public anglesPerImage: number;
 
     /**
+     * The initial angle to show (number between 0 and 360)
+     */
+    @Input() public startAngle: number = 0;
+
+    /**
      * Array with all (ordered) image urls
      */
     @Input() public images: string[] = [];
@@ -71,7 +76,7 @@ export class ThreeSixtyComponent implements OnInit {
      * @inheritDoc
      */
     public ngOnInit() {
-        let configuration: ConfigurationInterface = {
+        const configuration: ConfigurationInterface = {
             angles: this.angles,
             anglesPerImage: this.anglesPerImage
         };
@@ -86,7 +91,7 @@ export class ThreeSixtyComponent implements OnInit {
 
         const threeSixty = this.threeSixtyFactory.create(this.canvasElement.nativeElement, configuration);
 
-        threeSixty.initialize(this.images);
+        threeSixty.initialize(this.images, this.startAngle);
 
         if (this.preload) {
             threeSixty.preload().then(() => this.preloaded.emit());

@@ -71,7 +71,20 @@ describe('ThreeSixtyComponent', () => {
                 angles: angles,
                 anglesPerImage: anglesPerImage
             });
-            expect(threeSixty.initialize).toHaveBeenCalledWith(images);
+            expect(threeSixty.initialize).toHaveBeenCalledWith(images, 0);
+            expect(threeSixty.preload).not.toHaveBeenCalled();
+        });
+
+        it('should use the specified start angle', () => {
+            component.startAngle = 185;
+
+            component.ngOnInit();
+
+            expect(threeSixtyFactory.create).toHaveBeenCalledWith(canvasElement, {
+                angles: angles,
+                anglesPerImage: anglesPerImage
+            });
+            expect(threeSixty.initialize).toHaveBeenCalledWith(images, 185);
             expect(threeSixty.preload).not.toHaveBeenCalled();
         });
 
