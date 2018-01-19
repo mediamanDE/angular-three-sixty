@@ -6,6 +6,7 @@ import {
     OnInit,
     Output,
     EventEmitter,
+    ViewEncapsulation,
     OnChanges,
     SimpleChanges
 } from '@angular/core';
@@ -17,7 +18,8 @@ import ThreeSixty from '@mediaman/three-sixty';
 @Component({
     selector: 'mm-three-sixty',
     styleUrls: ['../node_modules/@mediaman/three-sixty/dist/three-sixty.css'],
-    template: `<canvas #canvasElement class="mm-three-sixty" [width]="width" [height]="height"></canvas>`
+    template: `<canvas #canvasElement class="mm-three-sixty" [width]="width" [height]="height"></canvas>`,
+    encapsulation: ViewEncapsulation.None
 })
 export class ThreeSixtyComponent implements OnInit, OnChanges {
 
