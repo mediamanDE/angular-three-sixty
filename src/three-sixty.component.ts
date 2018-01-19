@@ -1,14 +1,25 @@
-import { Component, ElementRef, ViewChild, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    ViewChild,
+    Input,
+    OnInit,
+    Output,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges
+} from '@angular/core';
 import { ThreeSixtyFactory } from './three-sixty.factory';
 import { HotspotInterface } from '@mediaman/three-sixty/dist/interfaces/hotspot.interface';
 import { ConfigurationInterface } from '@mediaman/three-sixty/dist/interfaces/configuration.interface';
+import ThreeSixty from '@mediaman/three-sixty';
 
 @Component({
     selector: 'mm-three-sixty',
     styleUrls: ['../node_modules/@mediaman/three-sixty/dist/three-sixty.css'],
     template: `<canvas #canvasElement class="mm-three-sixty" [width]="width" [height]="height"></canvas>`
 })
-export class ThreeSixtyComponent implements OnInit {
+export class ThreeSixtyComponent implements OnInit, OnChanges {
 
     /**
      * The canvas width
@@ -67,6 +78,11 @@ export class ThreeSixtyComponent implements OnInit {
     @ViewChild('canvasElement') private canvasElement: ElementRef;
 
     /**
+     * The three sixty instance
+     */
+    private threeSixty: ThreeSixty;
+
+    /**
      * @param threeSixtyFactory
      */
     public constructor(private threeSixtyFactory: ThreeSixtyFactory) {
@@ -76,6 +92,36 @@ export class ThreeSixtyComponent implements OnInit {
      * @inheritDoc
      */
     public ngOnInit() {
+        this.threeSixty = this.threeSixtyFactory.create(this.canvasElement.nativeElement, this.getThreeSixtyConfiguration());
+
+        this.threeSixty.initialize(this.images, this.startAngle);
+
+        if (this.preload) {
+            this.threeSixty.preload().then(() => this.preloaded.emit());
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public ngOnChanges(changes: SimpleChanges) {
+        if (!this.threeSixty) {
+            return;
+        }
+
+        // Don't update the configuration if only the images have been changed
+        const changedProperties = Object.keys(changes);
+        if (changedProperties.length === 1 && changedProperties[0] === 'images') {
+            return;
+        }
+
+        this.threeSixty.updateConfiguration(this.getThreeSixtyConfiguration());
+    }
+
+    /**
+     * Get the configuration object for the ThreeSixty instance
+     */
+    private getThreeSixtyConfiguration(): ConfigurationInterface {
         const configuration: ConfigurationInterface = {
             angles: this.angles,
             anglesPerImage: this.anglesPerImage
@@ -88,13 +134,6 @@ export class ThreeSixtyComponent implements OnInit {
         if (this.hotspots) {
             configuration.hotspots = this.hotspots;
         }
-
-        const threeSixty = this.threeSixtyFactory.create(this.canvasElement.nativeElement, configuration);
-
-        threeSixty.initialize(this.images, this.startAngle);
-
-        if (this.preload) {
-            threeSixty.preload().then(() => this.preloaded.emit());
-        }
+        return configuration;
     }
 }

@@ -3,6 +3,8 @@ import { ThreeSixtyComponent } from '../src/three-sixty.component';
 import { ThreeSixtyFactory } from '../src/three-sixty.factory';
 import { By } from '@angular/platform-browser';
 import ThreeSixty from '@mediaman/three-sixty';
+import { ConfigurationInterface } from '@mediaman/three-sixty/dist/interfaces/configuration.interface';
+import { SimpleChange } from '@angular/core';
 
 describe('ThreeSixtyComponent', () => {
     let fixture: ComponentFixture<ThreeSixtyComponent>;
@@ -34,6 +36,7 @@ describe('ThreeSixtyComponent', () => {
         spyOn(threeSixtyFactory, 'create').and.returnValue(threeSixty);
         spyOn(threeSixty, 'initialize');
         spyOn(threeSixty, 'preload').and.returnValue(new Promise((resolve) => resolve()));
+        spyOn(threeSixty, 'updateConfiguration');
     }));
 
     it('should set the canvas dimension', () => {
@@ -151,6 +154,38 @@ describe('ThreeSixtyComponent', () => {
 
                 done();
             });
+        });
+    });
+
+    describe('ngOnChanges', () => {
+        it('should update the three sixty instance configuration', () => {
+            const newSpeedFactor = 20;
+            const newConfiguration: ConfigurationInterface = {
+                angles: component.angles,
+                anglesPerImage: component.anglesPerImage,
+                speedFactor: newSpeedFactor
+            };
+
+            component.ngOnInit();
+
+            component.speedFactor = newSpeedFactor;
+            component.ngOnChanges({speedFactor: new SimpleChange(component.speedFactor, newSpeedFactor, false)});
+
+            expect(threeSixty.updateConfiguration).toHaveBeenCalledWith(newConfiguration);
+        });
+
+        it('should not update the three sixty instance does not exist yet', () => {
+            component.ngOnChanges({speedFactor: new SimpleChange(null, component.speedFactor, true)});
+
+            expect(threeSixty.updateConfiguration).not.toHaveBeenCalled();
+        });
+
+        it('should not update the three sixty instance configuration if the only changed property was images', () => {
+            component.ngOnInit();
+
+            component.ngOnChanges({images: new SimpleChange(component.images, [], false)});
+
+            expect(threeSixty.updateConfiguration).not.toHaveBeenCalled();
         });
     });
 });
