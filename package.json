@@ -31,7 +31,7 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@mediaman/three-sixty": "0.0.4",
+        "@mediaman/three-sixty": "0.0.5",
         "tslib": "^1.7.1"
     },
     "peerDependencies": {
