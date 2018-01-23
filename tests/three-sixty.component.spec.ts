@@ -37,6 +37,7 @@ describe('ThreeSixtyComponent', () => {
         spyOn(threeSixty, 'initialize');
         spyOn(threeSixty, 'preload').and.returnValue(new Promise((resolve) => resolve()));
         spyOn(threeSixty, 'updateConfiguration');
+        spyOn(threeSixty, 'updateImages');
     }));
 
     it('should set the canvas dimension', () => {
@@ -186,6 +187,59 @@ describe('ThreeSixtyComponent', () => {
             component.ngOnChanges({images: new SimpleChange(component.images, [], false)});
 
             expect(threeSixty.updateConfiguration).not.toHaveBeenCalled();
+        });
+
+        it('should update the three sixty instance images if the images property has been changed', () => {
+            const newImages = [
+                'http://example.com/image-0.jpg',
+                'http://example.com/image-1.jpg',
+                'http://example.com/image-2.jpg',
+                'http://example.com/image-3.jpg',
+                'http://example.com/image-4.jpg',
+                'http://example.com/image-5.jpg'
+            ];
+
+            component.ngOnInit();
+
+            component.images = newImages;
+            component.ngOnChanges({images: new SimpleChange([], newImages, false)});
+
+            expect(threeSixty.updateImages).toHaveBeenCalledWith(newImages);
+            expect(threeSixty.preload).not.toHaveBeenCalled();
+        });
+
+        it('should preload the images after changing them when the preload flag is set', (done) => {
+            const newImages = [
+                'http://example.com/image-0.jpg',
+                'http://example.com/image-1.jpg',
+                'http://example.com/image-2.jpg',
+                'http://example.com/image-3.jpg',
+                'http://example.com/image-4.jpg',
+                'http://example.com/image-5.jpg'
+            ];
+            spyOn(component.preloaded, 'emit');
+
+            component.ngOnInit();
+
+            component.preload = true;
+            component.images = newImages;
+            component.ngOnChanges({images: new SimpleChange([], newImages, false)});
+
+            expect(threeSixty.preload).toHaveBeenCalled();
+
+            setTimeout(() => {
+                expect(component.preloaded.emit).toHaveBeenCalled();
+
+                done();
+            });
+        });
+
+        it('should not update the three sixty instance images if the images property has not been changed', () => {
+            component.ngOnInit();
+
+            component.ngOnChanges({foo: new SimpleChange('foo', 'bar', false)});
+
+            expect(threeSixty.updateImages).not.toHaveBeenCalled();
         });
     });
 });

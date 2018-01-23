@@ -98,9 +98,7 @@ export class ThreeSixtyComponent implements OnInit, OnChanges {
 
         this.threeSixty.initialize(this.images, this.startAngle);
 
-        if (this.preload) {
-            this.threeSixty.preload().then(() => this.preloaded.emit());
-        }
+        this.preloadImages();
     }
 
     /**
@@ -113,11 +111,23 @@ export class ThreeSixtyComponent implements OnInit, OnChanges {
 
         // Don't update the configuration if only the images have been changed
         const changedProperties = Object.keys(changes);
-        if (changedProperties.length === 1 && changedProperties[0] === 'images') {
-            return;
+        if (changedProperties.length > 1 || !changes.hasOwnProperty('images')) {
+            this.threeSixty.updateConfiguration(this.getThreeSixtyConfiguration());
         }
 
-        this.threeSixty.updateConfiguration(this.getThreeSixtyConfiguration());
+        if (changes.hasOwnProperty('images')) {
+            this.threeSixty.updateImages(this.images);
+            this.preloadImages();
+        }
+    }
+
+    /**
+     * Preload all images if the preload flag is set
+     */
+    private preloadImages() {
+        if (this.preload) {
+            this.threeSixty.preload().then(() => this.preloaded.emit());
+        }
     }
 
     /**
