@@ -1,6 +1,6 @@
 {
     "name": "@mediaman/angular-three-sixty",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "360° Angular component",
     "main": "./bundles/angular-three-sixty.umd.js",
     "module": "./esm5/angular-three-sixty.js",
