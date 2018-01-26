@@ -3,6 +3,7 @@
 > Angular 360° component using the [three-sixty library](https://github.com/mediamanDE/three-sixty).
 
 [![Build Status](https://travis-ci.org/mediamanDE/angular-three-sixty.svg?branch=master)](https://travis-ci.org/mediamanDE/angular-three-sixty)
+[![npm version](https://badge.fury.io/js/%40mediaman%2Fangular-three-sixty.svg)](https://badge.fury.io/js/%40mediaman%2Fangular-three-sixty)
 
 ## Installation
 
