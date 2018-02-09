@@ -1,6 +1,6 @@
 {
     "name": "@mediaman/angular-three-sixty",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "360° Angular component",
     "main": "./bundles/angular-three-sixty.umd.js",
     "module": "./esm5/angular-three-sixty.js",
@@ -31,7 +31,7 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@mediaman/three-sixty": "0.0.7",
+        "@mediaman/three-sixty": "0.0.8",
         "tslib": "^1.7.1"
     },
     "peerDependencies": {
