@@ -65,7 +65,7 @@ describe('ThreeSixtyComponent', () => {
         beforeEach(() => {
             component.angles = angles;
             component.anglesPerImage = anglesPerImage;
-            component.images = images;
+            component.images = {1024: images};
         });
 
         it('should initialize a ThreeSixty instance', () => {
@@ -201,7 +201,7 @@ describe('ThreeSixtyComponent', () => {
 
             component.ngOnInit();
 
-            component.images = newImages;
+            component.images = {1024: newImages};
             component.ngOnChanges({images: new SimpleChange([], newImages, false)});
 
             expect(threeSixty.updateImages).toHaveBeenCalledWith(newImages);
@@ -222,7 +222,7 @@ describe('ThreeSixtyComponent', () => {
             component.ngOnInit();
 
             component.preload = true;
-            component.images = newImages;
+            component.images = {1024: newImages};
             component.ngOnChanges({images: new SimpleChange([], newImages, false)});
 
             expect(threeSixty.preload).toHaveBeenCalled();

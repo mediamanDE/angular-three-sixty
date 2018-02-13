@@ -13,6 +13,7 @@ import {
 import { ThreeSixtyFactory } from './three-sixty.factory';
 import { HotspotInterface } from '@mediaman/three-sixty/dist/interfaces/hotspot.interface';
 import { ConfigurationInterface } from '@mediaman/three-sixty/dist/interfaces/configuration.interface';
+import { ImageSetInterface } from '@mediaman/three-sixty/dist/interfaces/image-set.interface';
 import ThreeSixty from '@mediaman/three-sixty';
 
 @Component({
@@ -49,9 +50,9 @@ export class ThreeSixtyComponent implements OnInit, OnChanges {
     @Input() public startAngle: number = 0;
 
     /**
-     * Array with all (ordered) image urls
+     * Image set with all (ordered) image urls
      */
-    @Input() public images: string[] = [];
+    @Input() public images: ImageSetInterface = {};
 
     /**
      * The factor which increases the drag speed
