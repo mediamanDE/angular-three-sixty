@@ -33,6 +33,6 @@
         "annotateForClosureCompiler": true,
         "strictMetadataEmit": true,
         "flatModuleOutFile": "angular-three-sixty.js",
-        "flatModuleId": "angular-three-sixty"
+        "flatModuleId": "@mediaman/angular-three-sixty"
     }
 }
