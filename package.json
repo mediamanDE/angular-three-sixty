@@ -1,6 +1,6 @@
 {
     "name": "@mediaman/angular-three-sixty",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "360° Angular component",
     "main": "./bundles/angular-three-sixty.umd.js",
     "module": "./esm5/angular-three-sixty.js",
@@ -8,9 +8,9 @@
     "scripts": {
         "build": "node build.js",
         "test": "karma start",
-        "pack:lib": "npm pack ./dist",
-        "publish:lib": "npm publish --access public ./dist",
-        "publish:lib:next": "npm publish --tag next ./dist",
+        "pack:lib": "npm run build && npm pack ./dist",
+        "publish:lib": "npm run build && npm publish --access public ./dist",
+        "publish:lib:next": "npm run build && npm publish --tag next ./dist",
         "compodoc": "compodoc -p tsconfig.json",
         "compodoc:serve": "compodoc -s"
     },
