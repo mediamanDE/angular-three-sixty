@@ -123,6 +123,13 @@ export class ThreeSixtyComponent implements OnInit, OnChanges {
     }
 
     /**
+     * Force a preload of all images
+     */
+    public forcePreload() {
+        this.threeSixty.preload().then(() => this.preloaded.emit());
+    }
+
+    /**
      * Preload all images if the preload flag is set
      */
     private preloadImages() {

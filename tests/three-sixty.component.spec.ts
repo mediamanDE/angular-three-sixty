@@ -242,4 +242,26 @@ describe('ThreeSixtyComponent', () => {
             expect(threeSixty.updateImages).not.toHaveBeenCalled();
         });
     });
+
+    describe('::forcePreload', () => {
+        beforeEach(() => component.ngOnInit());
+
+        it('should preload the images if the preload flag is set', () => {
+            component.forcePreload();
+
+            expect(threeSixty.preload).toHaveBeenCalled();
+        });
+
+        it('should trigger the preloaded event when the images are preloaded', (done) => {
+            spyOn(component.preloaded, 'emit');
+
+            component.forcePreload();
+
+            setTimeout(() => {
+                expect(component.preloaded.emit).toHaveBeenCalled();
+
+                done();
+            });
+        });
+    });
 });
